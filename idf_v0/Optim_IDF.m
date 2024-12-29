@@ -1,0 +1,43 @@
+function [f,vararg] = Optim_IDF(x)
+    c_r = x(1)*10.56;
+    sweep_le = x(2)*30;
+    taper = x(3)*0.251;
+    span = x(4)*60.3;
+    k_u_1 = x(5)*0.2337;
+    k_u_2 = x(6)*0.0796;
+    k_u_3 = x(7)*0.2683;
+    k_u_4 = x(8)*0.0887;
+    k_u_5 = x(9)*0.2789;
+    k_u_6 = x(10)*0.3811;
+    k_u = [k_u_1 k_u_2 k_u_3 k_u_4 k_u_5 k_u_6];
+    k_l_1 = x(11)*(-0.2254);
+    k_l_2 = x(12)*(-0.1634);
+    k_l_3 = x(13)*(-0.0470);
+    k_l_4 = x(14)*(-0.4771);
+    k_l_5 = x(15)*0.0735;
+    k_l_6 = x(16)*0.3255;
+    k_l = [k_l_1 k_l_2 k_l_3 k_l_4 k_l_5 k_l_6];
+    M_cr = x(17)*0.82;
+    h_cr = x(18)*10058.4;
+    %Initial guess for output of discipline 2
+    W_wing_c = x(19); %to be multiplied by reference value
+    W_fuel_c = x(20); %to be multiplied by reference value
+    CL_wing_c = x(21); %to be multiplied by reference value
+    CD_wing_c = x(22); %to be multiplied by reference value
+        
+    W_wing = Loads_Structure(c_r, sweep_le, taper, span, k_u, k_l, M_cr, h_cr, W_wing_c, W_fuel_c);
+    CL_wing,CD_wing = Aerodynamics(I, M_cr, h_cr);
+    W_fuel = Performance(I, M_cr, h_cr, CL_w, CD_w);
+
+    f = 3.16*W_fuel;
+    
+      
+    global couplings;
+    
+    vararg = {W_wing, W_fuel, CL_wing, CD_wing,W_wing_c, W_fuel_c, CL_wing_c, CD_wing_c};
+    couplings.W_wing = W_wing;
+    couplings.W_fuel = W_fuel;
+    couplings.CL_wing = CL_wing;
+    couplings.CD_wing = CD_wing;
+    
+end
