@@ -17,7 +17,7 @@ I.Wing(1).CST_Lower = k_l;
 I.Wing(1).Area = (c_r+c_k)*0.2*span/2+(c_k+c_r*taper)*(1-0.2)*span/2;
 I.Wing(1).Span = span;
 I.Wing(1).SectionNumber = 3;
-I.Wing(1).AirfoilNumber = 1;
+I.Wing(1).AirfoilNumber = 3;
 
 I.Wing(1).AirfoilName = "withcomb135";
 I.Wing(1).AirfoilPosition = [0 0.2 1];
