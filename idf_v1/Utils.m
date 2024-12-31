@@ -73,9 +73,10 @@ classdef Utils
                 X_tank = linspace(0.15*chord_distribution(i),0.60*chord_distribution(i),100);
                 Yust = interp1(X1,Yust,X_tank);
                 Ylst = interp1(X1,Ylst,X_tank);
-                airfoil_surf(i) = chord_distribution(i)*trapz(1/100,Yust - Ylst);
+                airfoil_surf(i) = chord_distribution(i)*trapz((0.6-0.15)*chord_distribution(i)/100,Yust - Ylst);
             end
-            V_tank = 2*trapz(1/17,airfoil_surf);
+            %disp(airfoil_surf)
+            V_tank = 2*trapz(I.Wing(1).Span/(2*20),airfoil_surf);
         end
        
     end
