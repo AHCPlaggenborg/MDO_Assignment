@@ -6,6 +6,7 @@ W_AW = 134000; % A-W, to be changed
 
 I.Weight.MTOW = W_str + W_AW + W_fuel;
 I.Weight.ZFW = W_str + W_AW;
+I.Weight.Design = sqrt((W_str + W_AW + W_fuel)*(W_str + W_AW));
 I.n_max = 2.5;
 
 %% Wing geometry
