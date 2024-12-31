@@ -24,11 +24,7 @@ AC.Wing.eta = [0;0.2;1];  % Spanwise location of the airfoil sections
 % Viscous vs inviscid
 AC.Visc  = visc;              % 0 for inviscid and 1 for viscous analysis
 
-if sizing==0
-    n_max=1;
-else
-    n_max=I.n_max;
-end
+
 
 MAC = 2/3*I.Wing(1).WingSection.Chord*(1+I.Wing(1).Taper+I.Wing(1).Taper^2)/(1+I.Wing(1).Taper);
 
@@ -38,7 +34,11 @@ AC.Aero.rho   = Utils.density(h_cr);         % air density  (kg/m3)
 AC.Aero.alt   = h_cr;             % flight altitude (m)
 AC.Aero.Re    = AC.Aero.rho*AC.Aero.V*MAC/Utils.viscosity(h_cr);        % reynolds number (bqased on mean aerodynamic chord)
 AC.Aero.M     = M_cr;           % flight Mach number 
-AC.Aero.CL    = n_max*I.Weight.MTOW*9.8/(0.5*AC.Aero.rho*AC.Aero.V^2*I.Wing(1).Area);          % lift coefficient - comment this line to run the code for given alpha%
+if sizing==0
+    AC.Aero.CL    = I.Weight.Design*9.8/(0.5*AC.Aero.rho*AC.Aero.V^2*I.Wing(1).Area);          % lift coefficient
+else
+    AC.Aero.CL    = I.n_max*I.Weight.Design*9.8/(0.5*AC.Aero.rho*AC.Aero.V^2*I.Wing(1).Area);          % lift coefficient
+end
 %AC.Aero.Alpha = 2;             % angle of attack -  comment this line to run the code for given cl 
 
 
